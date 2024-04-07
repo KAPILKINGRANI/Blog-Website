@@ -2,6 +2,7 @@
 
 @section('admin-content')
     <div class="container px-4 mt-4">
+        @include('admin-panel.layouts._alert')
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
@@ -18,7 +19,7 @@
                                 <h1 class="d-inline-block">Tag<h1>
                             </div>
                             <div>
-                                <a href="#" class="btn btn-outline-primary">Add Tag</a>
+                                <a href="{{ route('tags.create') }}" class="btn btn-outline-primary">Add Tag</a>
                             </div>
                         </div>
                     </div>

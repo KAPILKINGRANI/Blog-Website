@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $tags = Tag::paginate(5);
+        $tags = Tag::latest()->paginate(5);
         return view('admin-panel.tags.index', compact('tags'));
     }
 
@@ -21,15 +22,19 @@ class TagsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin-panel.tags.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTagRequest $request)
     {
-        //
+        $tag = Tag::create(['name' => $request->get('name')]);
+        if (!$tag) {
+            return redirect(route('tags.index'))->with('error', 'Issue while creating tag !');
+        }
+        return redirect(route('tags.index'))->with('success', 'Tag Created Successfully');
     }
 
     /**
