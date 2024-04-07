@@ -1,11 +1,17 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin-panel.dashboard');
 });
+
+Route::resource('tags', TagsController::class)->except(['show']);
+Route::resource('categories', CategoriesController::class)->except(['show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -17,4 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
