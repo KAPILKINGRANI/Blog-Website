@@ -40,7 +40,7 @@
                                                 <td>{{ $tag->id }}</td>
                                                 <td>{{ $tag->name }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-warning">
+                                                    <a href="{{ route('tags.edit', $tag) }}" class="btn btn-warning">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -37,28 +38,26 @@ class TagsController extends Controller
         return redirect(route('tags.index'))->with('success', 'Tag Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin-panel.tags.edit', compact('tag'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        $tag->name = $request->name;
+        if ($tag->isClean()) {
+            return redirect(route('tags.index'))->with('error', 'You didn\'t change any field!');
+        }
+        $tag->save();
+        return redirect(route('tags.index'))->with('success', 'Tag Updated Successfully!');
     }
 
     /**
