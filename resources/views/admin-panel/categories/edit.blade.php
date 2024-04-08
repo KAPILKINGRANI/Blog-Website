@@ -6,16 +6,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1>Update Tag</h1>
+                        <h1>Update Category</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('tags.update', $tag) }}" method="POST">
+                        <form action="{{ route('categories.update', $category) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
-                                <label for="name" class="form-label">Tag</label>
+                                <label for="name" class="form-label">category</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" name="name" value="{{ old('name', $tag->name) }}">
+                                    id="name" name="name" value="{{ old('name', $category->name) }}">
                                 <div class="nameHelp" class="form-text text-danger">
                                     @error('name')
                                         {{ $message }}
