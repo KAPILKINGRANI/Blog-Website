@@ -21,6 +21,13 @@
     <div id="layoutSidenav">
         @include('admin-panel.layouts._sidebar')
         <div id="layoutSidenav_content">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col md-12">
+                        @include('admin-panel.layouts._alert')
+                    </div>
+                </div>
+            </div>
             @yield('admin-content')
             @include('admin-panel.layouts._footer')
         </div>
@@ -35,6 +42,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    @yield('page-level-content')
 </body>
 
 </html>

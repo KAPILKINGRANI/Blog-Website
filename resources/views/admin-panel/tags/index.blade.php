@@ -2,7 +2,6 @@
 
 @section('admin-content')
     <div class="container px-4 mt-4">
-        @include('admin-panel.layouts._alert')
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
@@ -44,8 +43,8 @@
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-danger delete-tag"
-                                                        data-tag-id={{ $tag->id }} data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal">
+                                                        data-delete-route={{ route('tags.destroy', $tag->id) }}
+                                                        data-bs-toggle="modal" data-bs-target="#deleteModal">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
                                                 </td>
@@ -84,20 +83,7 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const deleteBtns = document.querySelectorAll('.delete-tag');
-
-        deleteBtns.forEach((btn) => btn.addEventListener('click', deleteTag));
-
-        function deleteTag() {
-            const tagId = this.dataset.tagId;
-            const route = `/tags/${tagId}`;
-            const deleteForm = document.querySelector('#deleteForm');
-            deleteForm.setAttribute('action', route);
-            //bootstrap modal via js
-            const deleteModal = new bootstrap.Modal('#deleteModal');
-            deleteModal.show();
-        }
-    </script>
+@endsection
+@section('page-level-content')
+    <script src="={{ asset('admin/js/page-level/tags/index.js') }}"></script>
 @endsection

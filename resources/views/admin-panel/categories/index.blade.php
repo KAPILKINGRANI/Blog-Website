@@ -2,7 +2,6 @@
 
 @section('admin-content')
     <div class="container px-4 mt-4">
-        @include('admin-panel.layouts._alert')
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
