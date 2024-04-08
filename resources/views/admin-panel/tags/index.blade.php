@@ -43,9 +43,11 @@
                                                     <a href="{{ route('tags.edit', $tag) }}" class="btn btn-warning">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-danger delete-tag"
+                                                        data-tag-id={{ $tag->id }} data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal">
                                                         <i class="fa-solid fa-trash"></i>
-                                                    </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -61,4 +63,41 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Tag?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this Tag?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="" class="d-inline-block" id="deleteForm" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const deleteBtns = document.querySelectorAll('.delete-tag');
+
+        deleteBtns.forEach((btn) => btn.addEventListener('click', deleteTag));
+
+        function deleteTag() {
+            const tagId = this.dataset.tagId;
+            const route = `/tags/${tagId}`;
+            const deleteForm = document.querySelector('#deleteForm');
+            deleteForm.setAttribute('action', route);
+            //bootstrap modal via js
+            const deleteModal = new bootstrap.Modal('#deleteModal');
+            deleteModal.show();
+        }
+    </script>
 @endsection
