@@ -5,7 +5,8 @@
     <div class="pr25 pl25 clearfix">
         <form action="#">
             <div class="blog-sidebar-form-search">
-                <input type="text" name="search" class="" placeholder="e.g. Javascript">
+                <input type="text" name="search" class="" placeholder="e.g. Javascript"
+                    value="{{ request('search') }}">
                 <button type="submit" name="submit" class="pull-right"><i class="fa fa-search"></i></button>
             </div>
         </form>
@@ -21,8 +22,8 @@
         </h5>
         <ul class="blog-sidebar pl25">
             @foreach ($categories as $category)
-                <li><a href="#">{{ $category->name }}<span
-                            class="badge badge-pasific pull-right">{{ $category->posts->count() }}</span></a>
+                <li><a href="{{ route('blogs.category', $category) }}">{{ $category->name }}<span
+                            class="badge badge-pasific pull-right">{{ $category->posts()->published()->count() }}</span></a>
                 </li>
             @endforeach
         </ul>

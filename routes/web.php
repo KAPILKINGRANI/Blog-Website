@@ -7,10 +7,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [FrontendController::class, 'index']);
+Route::get('/', [FrontendController::class, 'index'])->name('blogs.index');
 
 Route::resource('tags', TagsController::class)->except(['show']);
 Route::resource('categories', CategoriesController::class)->except(['show']);
+
+Route::get('/categories/{category}', [FrontendController::class, 'category'])->name('blogs.category');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

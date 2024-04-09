@@ -4,6 +4,12 @@
 @section('main-content')
     <div class="col-md-9 mt25">
         <div class="row">
+            @if (request('search'))
+                <h3>Search For: {{ request('search') }}</h3>
+            @endif
+            @if ($posts->count() === 0)
+                <h4>No Posts Found !</h4>
+            @endif
             @foreach ($posts as $post)
                 <div class="col-md-4 col-sm-6 col-xs-12 mb50">
                     <h4 class="blog-title"><a href="#">{{ Str::limit($post->title, 50) }}</a></h4>
@@ -11,7 +17,7 @@
                         <span class="icon-calendar"></span> {{ $post->published_at->diffForHumans() }}|
                         <span class=" icon-pencil"></span><a href="#"> {{ $post->author->name }}</a>
                     </div>
-                    <img src="{{ $post->image_path }}" class="img-responsive" alt="image blog">
+                    <img src="{{ asset($post->image_path) }}" class="img-responsive" alt="image blog">
                     <p class="mt25">
                         {{ Str::limit($post->excerpt, 100) }}
                     </p>
@@ -20,9 +26,9 @@
                 </div>
             @endforeach
         </div>
-        {{ $posts->links('vendor.pagination.simple-default') }}
+        {{ $posts->appends(['search' => request('search')])->links('vendor.pagination.simple-default') }}
+        {{-- appends the search parameter in the url  --}}
     </div>
 @endsection
 </div>
 {{-- Paging will be added in simple-default.blade.php file so that our buttons work for pagination --}}
-

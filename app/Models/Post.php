@@ -30,4 +30,20 @@ class Post extends Model
         //here if u don't pass user_id laravel will find as author_id
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('published_at');
+    }
+
+    public function scopeSearch($query)
+    {
+        $searchKey = request('search');
+
+        if ($searchKey) {
+            $query = $query->where('title', 'like', "%${searchKey}%");
+        }
+
+        return $query;
+    }
 }

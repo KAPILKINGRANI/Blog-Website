@@ -13,9 +13,25 @@ class FrontendController extends Controller
     {
         $categories = Category::limit(5)->get();
         $tags = Tag::limit(7)->get();
-        $posts = Post::whereNotNull('published_at')
+
+        $posts = Post::published()
+            ->search()
             ->latest()
             ->simplePaginate(9);
+
+        return view('welcome', compact(['categories', 'tags', 'posts']));
+    }
+
+    public function category(Request $request, Category $category)
+    {
+        $posts = $category->posts()
+            ->search()
+            ->published()
+            ->latest()
+            ->simplePaginate(9);
+
+        $categories = Category::limit(5)->get();
+        $tags = Tag::limit(7)->get();
 
         return view('welcome', compact(['categories', 'tags', 'posts']));
     }
