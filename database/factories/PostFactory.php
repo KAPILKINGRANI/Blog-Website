@@ -18,7 +18,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $images = collect(['1.png', '2.png', '3.png']);
+        $images = collect(['1.jpg', '2.jpg', '3.jpg']);
         $isDraft = collect([0, 1])->random();
 
         if ($isDraft) {
@@ -28,7 +28,7 @@ class PostFactory extends Factory
                 'title' => fake()->sentence(mt_rand(5, 10)),
                 'excerpt' => fake()->sentence(mt_rand(10, 20)),
                 'body' => fake()->paragraphs(mt_rand(10, 20), true),
-                'image_path' => public_path('images/posts/' . $images->random())
+                'image_path' => 'images/posts/' . $images->random()
             ];
         }
         return [
@@ -37,7 +37,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(mt_rand(5, 10)),
             'excerpt' => fake()->sentence(mt_rand(10, 20)),
             'body' => fake()->paragraphs(mt_rand(10, 20), true),
-            'image_path' => public_path('images/posts/' . $images->random()),
+            'image_path' => 'images/posts/' . $images->random(),
             'published_at' => $isDraft ? NULL : now()
         ];
     }
