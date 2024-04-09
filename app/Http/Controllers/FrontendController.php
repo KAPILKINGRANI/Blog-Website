@@ -48,4 +48,12 @@ class FrontendController extends Controller
 
         return view('welcome', compact(['categories', 'tags', 'posts']));
     }
+
+    public function show(Request $request, Post $post)
+    {
+        $categories = Category::limit(5)->get();
+        $tags = Tag::limit(7)->get();
+
+        return view('frontend.single-post', compact(['categories', 'tags', 'post']));
+    }
 }
