@@ -13,6 +13,8 @@ Route::resource('tags', TagsController::class)->except(['show']);
 Route::resource('categories', CategoriesController::class)->except(['show']);
 
 Route::get('/categories/{category}', [FrontendController::class, 'category'])->name('blogs.category');
+Route::get('/tags/{tag}', [FrontendController::class, 'tag'])->name('blogs.tag');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

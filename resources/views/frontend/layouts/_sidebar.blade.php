@@ -39,7 +39,7 @@
         </h5>
         <ul class="tag">
             @foreach ($tags as $tag)
-                <li><a href="#">{{ $tag->name }}</a></li>
+                <li><a href="{{ route('blogs.tag', $tag) }}">{{ $tag->name }}</a></li>
             @endforeach
         </ul>
 
