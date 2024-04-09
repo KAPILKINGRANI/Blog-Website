@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',function() {
         console.log(route);
         const deleteForm = document.querySelector('#deleteForm');
         deleteForm.setAttribute('action', route);
+        console.log(deleteForm.action);
         const deleteModal = new bootstrap.Modal('#deleteModal');
         deleteModal.show();
     }
