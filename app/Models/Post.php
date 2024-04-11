@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     protected function casts(): array
     {
         return [
@@ -49,5 +51,20 @@ class Post extends Model
     public function getStatusAttribute()
     {
         return $this->published_at === null ? "<span class='badge bg-warning'>Draft</span>" : "<span class='badge bg-success'>Published</span>";
+    }
+
+    public function getIsPublishedAttribute()
+    {
+        return $this->published_at !== null;
+    }
+
+    public function getImageAttribute()
+    {
+        return 'storage/' . $this->image_path;
+    }
+
+    public function deleteImage(): bool
+    {
+        return Storage::delete($this->image_path);
     }
 }

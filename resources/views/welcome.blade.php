@@ -36,7 +36,7 @@
                         <span class="icon-calendar"></span> {{ $post->published_at->diffForHumans() }}|
                         <span class=" icon-pencil"></span><a href="#"> {{ Str::limit($post->author->name, 10) }}</a>
                     </div>
-                    <img src="{{ asset($post->image_path) }}" class="img-responsive" alt="image blog">
+                    <img src="{{ asset($post->image) }}" class="img-responsive" alt="image blog">
                     <p class="mt25">
                         {{ Str::limit($post->excerpt, 50) }}
                     </p>

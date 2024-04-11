@@ -36,9 +36,9 @@
                     </div>
                 </div>
 
-                <img src="{{ asset($post->image_path) }}" alt="Blog Image" class="img-responsive">
+                <img src="{{ asset($post->image) }}" alt="Blog Image" class="img-responsive">
                 <p class="lead mt25">
-                    {{ $post->body }}
+                    {!! $post->body !!}
                 </p>
 
                 <div class="blog-post-read-tag mt50">

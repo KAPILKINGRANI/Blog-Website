@@ -19,6 +19,7 @@ Route::get('/tags/{tag}', [FrontendController::class, 'tag'])->name('blogs.tag')
 Route::get('/blogs/{post}', [FrontendController::class, 'show'])->name('blogs.show');
 
 Route::resource('posts', PostsController::class);
+Route::put('posts/{post}/publish-now', [PostsController::class, 'publish'])->name('posts.publish');
 
 
 Route::get('/dashboard', function () {

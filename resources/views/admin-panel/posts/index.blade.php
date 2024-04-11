@@ -44,7 +44,7 @@
                                             <tr>
                                                 <td>{{ $post->id }}</td>
                                                 <td>
-                                                    <img src="{{ $post->image_path }}" alt="{{ $post->title }}"
+                                                    <img src="{{ asset($post->image) }}" alt="{{ $post->title }}"
                                                         style="max-width: 100px">
                                                 </td>
                                                 <td>{{ Str::limit($post->title, 10) }}</td>
@@ -61,6 +61,12 @@
                                                         data-delete-route="{{ route('posts.destroy', $post->id) }}">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
+                                                    @if (!$post->is_published)
+                                                        <button data-publish-route="{{ route('posts.publish', $post) }}"
+                                                            class="publish-post btn btn-info" title="Publish Now">
+                                                            <i class="fa-solid fa-upload"></i>
+                                                        </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -76,6 +82,7 @@
             </div>
         </div>
     </div>
+    {{-- Delete Modal --}}
     <div class="modal fade" id="deleteModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -97,7 +104,31 @@
             </div>
         </div>
     </div>
+
+    {{-- Publish Modal --}}
+    <div class="modal fade" id="publishModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="publishModalLabel">Publish Post?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to publish this Post right now?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="" class="d-inline-block" id="publishForm" method="POST">
+                        @csrf
+                        @method('put')
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
-@section('page-level-content')
+@section('page-level-scripts')
     <script src="{{ asset('admin/js/page-level/tags/index.js') }}"></script>
+    <script src="{{ asset('admin/js/page-level/posts/index.js') }}"></script>
 @endsection
