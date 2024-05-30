@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->create([
+            'name' => 'kapil',
+            'email' => 'kapil@gmail.com',
+            'password' => Hash::make('abcd1234'),
+            'role' => 'admin'
+        ]);
         User::factory(200)->create();
         Category::factory(10)->create();
         Tag::factory(25)->create();

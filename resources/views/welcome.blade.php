@@ -40,7 +40,7 @@
                     <p class="mt25">
                         {{ Str::limit($post->excerpt, 50) }}
                     </p>
-                    <a href="#" class="button button-gray button-xs">Read More <i
+                    <a href="{{ route('blogs.show', $post) }}" class="button button-gray button-xs">Read More <i
                             class="fa fa-long-arrow-right"></i></a>
                 </div>
             @endforeach
