@@ -23,6 +23,7 @@ return new class extends Migration
             //it can be nullable article may be in draft haven't publish
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
+            $table->softDeletes('deleted_at');
 
             $table->foreign('user_id')
                 ->references('id')

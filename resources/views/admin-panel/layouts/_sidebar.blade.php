@@ -19,11 +19,11 @@
                     Categories
                 </a>
                 <div class="sb-sidenav-menu-heading">Blogs</div>
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="">
                     <div class="sb-nav-link-icon"><i class="fas fa-blog"></i></div>
                     Posts
                 </a>
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{ route('posts.trashed') }}">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-trash"></i></div>
                     Trashed Posts
                 </a>

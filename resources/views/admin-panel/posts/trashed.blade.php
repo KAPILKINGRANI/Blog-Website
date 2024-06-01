@@ -14,10 +14,7 @@
                                         d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z">
                                     </path>
                                 </svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com --> --}}
-                                <h1 class="d-inline-block">Posts<h1>
-                            </div>
-                            <div>
-                                <a href="{{ route('posts.create') }}" class="btn btn-outline-primary">Add Post</a>
+                                <h1 class="d-inline-block">Trashed Posts</h1>
                             </div>
                         </div>
                     </div>
@@ -53,24 +50,21 @@
                                                 <td>{{ $post->category->name }}</td>
                                                 <td>{{ $post->author->name }}</td>
                                                 <td>
-                                                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-warning">
-                                                        <i class="fa-solid fa-pencil"></i>
-                                                    </a>
+                                                    <button type="button" class="btn btn-warning restore-post"
+                                                        data-publish-route="{{ route('posts.restore', $post) }}"
+                                                        title="Restore Now">
+                                                        <i class="fa-solid fa-recycle"></i>
+                                                    </button>
                                                     <button type="button" class="btn btn-danger delete-post"
-                                                        data-delete-route="{{ route('posts.destroy', $post->id) }}">
+                                                        data-delete-route="{{ route('posts.forceDelete', $post) }}">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
-                                                    @if (!$post->is_published)
-                                                        <button data-publish-route="{{ route('posts.publish', $post) }}"
-                                                            class="publish-post btn btn-info" title="Publish Now">
-                                                            <i class="fa-solid fa-upload"></i>
-                                                        </button>
-                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+
                                 <div class="datatable-bottom">
                                     {{ $posts->links() }}
                                 </div>
@@ -81,20 +75,21 @@
             </div>
         </div>
     </div>
+
     {{-- Delete Modal --}}
     <div class="modal fade" id="deleteModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete this Post?</p>
+                    <p>Are you sure you want to delete the post permanently?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <form action="" class="d-inline-block" id="deleteForm" method="POST">
+                    <form action="" method="POST" id="deleteForm">
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -104,23 +99,23 @@
         </div>
     </div>
 
-    {{-- Publish Modal --}}
-    <div class="modal fade" id="publishModal" tabindex="-1">
+    {{-- Confirm Restore Modal --}}
+    <div class="modal fade" id="restoreModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="publishModalLabel">Publish Post?</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Restore Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to publish this Post right now?</p>
+                    <p>Are you sure you want to restore this post?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <form action="" class="d-inline-block" id="publishForm" method="POST">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <form action="" method="POST" id="restoreForm">
                         @csrf
                         @method('put')
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
                     </form>
                 </div>
             </div>
@@ -128,6 +123,5 @@
     </div>
 @endsection
 @section('page-level-scripts')
-    <script src="{{ asset('admin/js/page-level/tags/index.js') }}"></script>
-    <script src="{{ asset('admin/js/page-level/posts/index.js') }}"></script>
+    <script src="{{ asset('admin/js/page-level/posts/trashed.js') }}"></script>
 @endsection

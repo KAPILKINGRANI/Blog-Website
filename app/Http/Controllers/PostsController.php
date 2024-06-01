@@ -16,7 +16,7 @@ class PostsController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('verifyUserForEditAndDelete', only: ['edit', 'update', 'delete', 'publish'])
+            new Middleware('verifyUserForEditAndDelete', only: ['edit', 'update', 'destroy', 'publish', 'forceDelete', 'restore'])
         ];
     }
     public function index()
@@ -86,9 +86,34 @@ class PostsController extends Controller implements HasMiddleware
     }
     public function destroy(Post $post)
     {
-        $post->deleteImage();
-        $post->delete();
+        $post->delete(); //This is soft deleting the post
         session()->flash('success', 'Post Deleted Successfully!');
         return (redirect(route('posts.index')));
+    }
+    public function trashed()
+    {
+        if (auth()->user()->isAdmin()) {
+            $posts = Post::onlyTrashed()->paginate(10);
+        } else {
+            $posts = Post::onlyTrashed()->where('user_id', auth()->id())->paginate(10);
+        }
+        return view('admin-panel.posts.trashed', compact(['posts']));
+    }
+
+    public function restore(int $postId)
+    {
+        //yaha parameter mai int hai that means route model binding is not working since post is deleted so...
+        $post = Post::onlyTrashed()->find($postId);
+        $post->restore();
+        session()->flash("Success", "Post Restored Successfully!");
+        return (redirect(route('posts.trashed')));
+    }
+    public function forceDelete(int $postId)
+    {
+        $post = Post::onlyTrashed()->find($postId);
+        $post->deleteImage();
+        $post->forceDelete();
+        session()->flash('Success', 'Post Deleted Successfully!');
+        return (redirect(route('posts.trashed')));
     }
 }
