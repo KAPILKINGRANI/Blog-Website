@@ -57,9 +57,20 @@
                 </p>
             </div>
 
-
-            <div class="blog-post-comment-container">
+            {{-- Comments Template --}}
+            {{-- <div class="blog-post-comment-container">
                 <h5><i class="fa fa-comments-o mb25"></i> 20 Comments</h5>
+
+                <div class="blog-post-comment">
+                    <img src="{{ asset('frontend/assets/img/other/photo-2.jpg') }}" class="img-circle" alt="image">
+                    <span class="blog-post-comment-name">John Boo</span> Jan. 20 2016, 10:00 PM
+                    <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
+                    <p>
+                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
+                        consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+                    </p>
+                </div>
+
                 <div class="blog-post-comment">
                     <img src="{{ asset('frontend/assets/img/other/photo-4.jpg') }}" class="img-circle" alt="image">
                     <span class="blog-post-comment-name">John Boo</span> Jan. 20 2016, 10:00 PM
@@ -93,19 +104,46 @@
                     Comments</button>
 
 
+            </div> --}}
+
+
+            {{-- MY COMMENTS SECTION --}}
+            <div class="blog-post-comment-container">
+                <h5><i class="fa fa-comments-o mb25"></i>{{ $post->comments->count() }} Comments</h5>
+                @foreach ($comments as $comment)
+                    <div class="blog-post-comment">
+                        <span
+                            class="blog-post-comment-name">{{ $comment->author->name }}</span>{{ $comment->created_at->diffForHumans() }}
+                        <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
+                        <p style="margin: 5px 0 0 0;">
+                            {{ $comment->body }}
+                        </p>
+                    </div>
+                @endforeach
             </div>
 
+            {{-- <input type="text" name="name" class="blog-leave-comment-input" placeholder="name" required>
+                    <input type="email" name="name" class="blog-leave-comment-input" placeholder="email" required>
+                    <input type="url" name="name" class="blog-leave-comment-input" placeholder="website"> --}}
             <div class="blog-post-leave-comment">
                 <h5><i class="fa fa-comment mt25 mb25"></i> Leave Comment</h5>
 
-                <form>
-                    <input type="text" name="name" class="blog-leave-comment-input" placeholder="name" required>
-                    <input type="email" name="name" class="blog-leave-comment-input" placeholder="email" required>
-                    <input type="url" name="name" class="blog-leave-comment-input" placeholder="website">
-                    <textarea name="message" class="blog-leave-comment-textarea"></textarea>
-                    <button class="button button-pasific button-sm center-block mb25">Leave Comment</button>
+                <form action={{ route('comments.store') }} method="POST">
+                    @csrf
+                    {{-- Important
+                         Post id hidden karke beji hai --}}
+                    <input type="hidden" name="post_id" value={{ $post->id }}>
+                    <label for="body" class="form-label">Comment Body</label>
+                    <textarea type="text" name="body"
+                        class="blog-leave-comment-textarea @error('body') isinvalid
+                    @enderror" id="body">{{ old('body') }}</textarea>
+                    <div id="nameHelp" class="form-text text-danger">
+                        @error('body')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    <button type="submit" class="button button-pasific button-sm center-block mb25">Leave Comment</button>
                 </form>
-
             </div>
 
         </div>

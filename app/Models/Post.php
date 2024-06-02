@@ -33,6 +33,10 @@ class Post extends Model
         //here if u don't pass user_id laravel will find as author_id
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     public function scopePublished($query)
     {

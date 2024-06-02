@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -53,7 +54,21 @@ class FrontendController extends Controller
     {
         $categories = Category::limit(5)->get();
         $tags = Tag::limit(7)->get();
+        $comments = $post->comments;
 
-        return view('frontend.single-post', compact(['categories', 'tags', 'post']));
+
+        return view('frontend.single-post', compact(['categories', 'tags', 'post', 'comments']));
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'body' => 'required'
+        ]);
+        Comment::create([
+            'body' => $request->body,
+            'post_id' => $request->post_id,
+            'user_id' => auth()->user()->id
+        ]);
+        return redirect(route('blogs.show', $request->post_id));
     }
 }
