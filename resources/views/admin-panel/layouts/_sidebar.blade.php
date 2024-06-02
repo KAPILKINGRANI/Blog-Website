@@ -18,6 +18,13 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-gears"></i></div>
                     Categories
                 </a>
+                @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                        Users
+                    </a>
+                @endif
                 <div class="sb-sidenav-menu-heading">Blogs</div>
                 <a class="nav-link" href="">
                     <div class="sb-nav-link-icon"><i class="fas fa-blog"></i></div>
@@ -31,7 +38,8 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Start Bootstrap
+            {{ auth()->user()->name }}
+            {{ auth()->user()->role }}
         </div>
     </nav>
 </div>

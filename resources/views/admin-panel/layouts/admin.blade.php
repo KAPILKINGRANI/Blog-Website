@@ -11,7 +11,7 @@
     <title>@yield('title', 'Blog CMS')</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     {{-- used asset for css  --}}
-    <link href=" {{asset('admin/css/styles.css')}} " rel="stylesheet" />
+    <link href=" {{ asset('admin/css/styles.css') }} " rel="stylesheet" />
     @yield('page-level-styles')
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
@@ -40,9 +40,10 @@
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-    crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <script src="{{ asset('admin/js/datatables-simple-demo.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @yield('page-level-scripts')
 </body>
+
 </html>

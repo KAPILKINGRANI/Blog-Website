@@ -64,6 +64,10 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+
+        if ($category->posts->first()) {
+            return redirect(route('categories.index'))->with('error', 'Category Cannot be Deleted because some posts are associated with it!');
+        }
         $category->delete();
         return redirect(route('categories.index'))->with('success', 'Category Deleted Successfully!');
     }

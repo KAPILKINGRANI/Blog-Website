@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ValidateCategory;
 use App\Http\Middleware\ValidateUserForEditAndDelete;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'verifyUserForEditAndDelete' => ValidateUserForEditAndDelete::class
         ]); // alias is used to name the middleware
     })
+    ->withMiddleware(
+        function (Middleware $middleware) {
+            $middleware->alias([
+                'verifyCategoryBeforeCreatingPost' => ValidateCategory::class
+            ]);
+        }
+    )
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

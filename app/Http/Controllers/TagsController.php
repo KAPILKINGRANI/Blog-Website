@@ -65,6 +65,10 @@ class TagsController extends Controller
      */
     public function destroy(Tag $tag)
     {
+
+        if ($tag->posts->first()) {
+            return redirect(route('tags.index'))->with('error', 'Tag Cannot be Deleted because some posts are associated with it!');
+        }
         $tag->delete();
         return redirect(route('tags.index'))->with('success', 'Tag Deleted Successfully!');
     }

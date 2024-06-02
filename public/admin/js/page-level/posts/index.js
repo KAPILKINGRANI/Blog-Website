@@ -16,6 +16,7 @@ function deletePost() {
 function publishPost()
 {
         const route = this.dataset.publishRoute;
+        console.log(route);
         const publishForm = document.querySelector('#publishForm');
         publishForm.setAttribute('action', route);
         const publishModal = new bootstrap.Modal('#publishModal');

@@ -15,7 +15,7 @@
                                         d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z">
                                     </path>
                                 </svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com -->
-                                <h1 class="d-inline-block">Tag<h1>
+                                <h1 class="d-inline-block">Tags</h1>
                             </div>
                             <div>
                                 <a href="{{ route('tags.create') }}" class="btn btn-outline-primary">Add Tag</a>
@@ -51,6 +51,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
                                 <div class="datatable-bottom">
                                     {{ $tags->links() }}
                                 </div>
@@ -60,29 +61,28 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Tag?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this Tag?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <form action="" class="d-inline-block" id="deleteForm" method="POST">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
+        <div class="modal fade" id="deleteModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete Tag</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete the tag?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form action="" method="POST" id="deleteForm">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-@section('page-level-content')
-    <script src="{{ asset('admin/js/page-level/tags/index.js') }}"></script>
-@endsection
+    @endsection
+    @section('page-level-scripts')
+        <script src="{{ asset('admin/js/page-level/tags/index.js') }}"></script>
+    @endsection
