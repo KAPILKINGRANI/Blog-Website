@@ -16,7 +16,8 @@ class PostsController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('verifyUserForEditAndDelete', only: ['edit', 'update', 'destroy', 'publish', 'forceDelete', 'restore'])
+            new Middleware('verifyUserForEditAndDelete', only: ['edit', 'update', 'destroy', 'publish', 'forceDelete', 'restore']),
+            new Middleware('verifyCategoryBeforeCreatingPost', only: ['create'])
         ];
     }
     public function index()

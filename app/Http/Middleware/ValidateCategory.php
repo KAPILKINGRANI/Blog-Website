@@ -16,8 +16,10 @@ class ValidateCategory
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $category = Category::first();
-        dd()
+        if (!Category::first()) {
+            return (redirect(route('categories.create')))->with('error', 'Please First Create A Category Before Creating A Post ! No Categories are there');
+        }
+
         return $next($request);
     }
 }
