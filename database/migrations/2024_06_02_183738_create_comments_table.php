@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); //the one who comments
             $table->unsignedBigInteger('post_id'); //comment on post
             $table->text('body'); //comment
+            $table->text('status')->default('not_approved'); //comment will be first approved by the admin or superadmin
             $table->timestamps();
         });
     }

@@ -22,6 +22,12 @@ class FrontendController extends Controller
 
         return view('welcome', compact(['categories', 'tags', 'posts']));
     }
+    public function displayComments()
+    {
+        $comments = Comment::paginate(20);
+        // dd($comments);
+        return view('admin-panel.comments.index', compact('comments'));
+    }
 
     public function category(Request $request, Category $category)
     {
@@ -59,7 +65,7 @@ class FrontendController extends Controller
 
         return view('frontend.single-post', compact(['categories', 'tags', 'post', 'comments']));
     }
-    public function store(Request $request)
+    public function storeComment(Request $request)
     {
         $request->validate([
             'body' => 'required'
@@ -70,5 +76,16 @@ class FrontendController extends Controller
             'user_id' => auth()->user()->id
         ]);
         return redirect(route('blogs.show', $request->post_id));
+    }
+    public function approveComment(Comment $comment)
+    {
+        $comment->status = 'approved';
+        $comment->save();
+        return redirect(route('comments.display'))->with('success', "Comment Has Been Approved");
+    }
+    public function deleteComment(Comment $comment)
+    {
+        $comment->delete();
+        return redirect(route('comments.display'))->with('success', 'Comment Deleted Successfully!');
     }
 }

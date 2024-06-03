@@ -20,7 +20,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::put('/users/{user}/makeAdmin', [UsersController::class, 'makeAdmin'])->name('users.makeAdmin');
     Route::put('/users/{user}/revokeAdmin', [UsersController::class, 'revokeAdmin'])->name('users.revokeAdmin');
-    Route::post('/comments/store', [FrontendController::class, 'store'])->name('comments.store');
+
+    Route::put('post/{comment}/approveComment', [FrontendController::class, 'approveComment'])->name('post.approveComment');
+    Route::delete('post/{comment}/deleteComment', [FrontendController::class, 'deleteComment'])->name('post.deleteComment');
+
+
+
+    Route::get('/comments', [FrontendController::class, 'displayComments'])->name('comments.display');
+    Route::post('/comments/store', [FrontendController::class, 'storeComment'])->name('comments.store');
 
 
     Route::get('/posts/trashed', [PostsController::class, 'trashed'])->name('posts.trashed');

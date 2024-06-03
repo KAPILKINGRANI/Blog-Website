@@ -111,14 +111,20 @@
             <div class="blog-post-comment-container">
                 <h5><i class="fa fa-comments-o mb25"></i>{{ $post->comments->count() }} Comments</h5>
                 @foreach ($comments as $comment)
-                    <div class="blog-post-comment">
-                        <span
-                            class="blog-post-comment-name">{{ $comment->author->name }}</span>{{ $comment->created_at->diffForHumans() }}
-                        <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
-                        <p style="margin: 5px 0 0 0;">
-                            {{ $comment->body }}
-                        </p>
-                    </div>
+                    @if ($comment->status === 'approved')
+                        <div class="blog-post-comment">
+                            <span
+                                class="blog-post-comment-name">{{ $comment->author->name }}</span>{{ $comment->created_at->diffForHumans() }}
+                            <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
+                            <p style="margin: 5px 0 0 0;">
+                                {{ $comment->body }}
+                            </p>
+                        </div>
+                    @else
+                        <div class="blog-post-comment">
+                            <p>Waiting For Approval From The Admin</p>
+                        </div>
+                    @endif
                 @endforeach
             </div>
 
@@ -136,7 +142,8 @@
                     <label for="body" class="form-label">Comment Body</label>
                     <textarea type="text" name="body"
                         class="blog-leave-comment-textarea @error('body') isinvalid
-                    @enderror" id="body">{{ old('body') }}</textarea>
+                    @enderror" id="body"
+                        style="border:2px solid black">{{ old('body') }}</textarea>
                     <div id="nameHelp" class="form-text text-danger">
                         @error('body')
                             {{ $message }}

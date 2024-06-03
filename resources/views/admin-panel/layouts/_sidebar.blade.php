@@ -24,6 +24,12 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                         Users
                     </a>
+
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                        Comments
+                    </a>
                 @endif
                 <div class="sb-sidenav-menu-heading">Blogs</div>
                 <a class="nav-link" href="">
