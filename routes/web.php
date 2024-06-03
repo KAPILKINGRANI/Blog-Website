@@ -26,8 +26,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 
 
+
     Route::get('/comments', [FrontendController::class, 'displayComments'])->name('comments.display');
-    Route::post('/comments/store', [FrontendController::class, 'storeComment'])->name('comments.store');
+    Route::post('/comments/{post}/store', [FrontendController::class, 'storeComment'])->name('comments.store');
+    Route::post('/comments/{comment}/posts/{post}/store', [FrontendController::class, 'storeCommentReply'])->name('reply.store');
 
 
     Route::get('/posts/trashed', [PostsController::class, 'trashed'])->name('posts.trashed');

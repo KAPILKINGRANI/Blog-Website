@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('comments', function (Blueprint $table) {
+            //unsignedBigInteger stores only positive and zero
             $table->id(); //comment id
             $table->unsignedBigInteger('user_id'); //the one who comments
             $table->unsignedBigInteger('post_id'); //comment on post
-            $table->text('body'); //comment
+            $table->unsignedBigInteger('parent_id')->nullable(); //this is for replies
+            $table->text('body'); //comment body
             $table->text('status')->default('not_approved'); //comment will be first approved by the admin or superadmin
             $table->timestamps();
         });

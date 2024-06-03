@@ -48,6 +48,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    public function comments()
+    {
+        // a user has many comments
+        return $this->hasMany(Comment::class);
+    }
     public function isAdmin(): bool
     {
         return $this->role === 'admin';

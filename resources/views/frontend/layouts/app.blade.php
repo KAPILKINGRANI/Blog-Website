@@ -87,7 +87,7 @@
     </nav>
 
 
-   
+
 
     @yield('header');
     <!-- Blog Area
@@ -138,7 +138,7 @@
 
                 <div class="col-md-2 col-xs-12 mb25">
                     <div class="navbar-brand-footer center-block">Pen-It</div>
-                    <div class="copyright center-block">&copy; 2020. All rights reserved.</div>
+                    <div class="copyright center-block">&copy; 2024. All rights reserved.</div>
                 </div>
 
                 <div class="col-md-8 col-xs-12 text-center">

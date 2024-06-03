@@ -12,12 +12,12 @@ class Comment extends Model
 
     public function post()
     {
-        //Many Comments Belongs to one post
+       //a comment belongs to post
         return $this->belongsTo(Post::class);
     }
     public function author()
     {
-        //many comments belongs to one user
+        //a comment belongs to user
         return $this->belongsTo(User::class, 'user_id');
     }
 }

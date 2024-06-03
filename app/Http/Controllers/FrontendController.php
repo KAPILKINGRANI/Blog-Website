@@ -65,17 +65,30 @@ class FrontendController extends Controller
 
         return view('frontend.single-post', compact(['categories', 'tags', 'post', 'comments']));
     }
-    public function storeComment(Request $request)
+    public function storeComment(Request $request,Post $post)
     {
         $request->validate([
             'body' => 'required'
         ]);
         Comment::create([
             'body' => $request->body,
-            'post_id' => $request->post_id,
+            'post_id' => $post->id,
             'user_id' => auth()->user()->id
         ]);
-        return redirect(route('blogs.show', $request->post_id));
+        return redirect(route('blogs.show', $post->id));
+    }
+    public function storeCommentReply(Request $request, Comment $comment, Post $post)
+    {
+        $request->validate([
+            'body' => 'required'
+        ]);
+        Comment::create([
+            'body' => $request->body,
+            'post_id' => $post->id,
+            'user_id' => auth()->user()->id,
+            'parent_id' => $comment->id
+        ]);
+        return redirect(route('blogs.show', $post->id));
     }
     public function approveComment(Comment $comment)
     {

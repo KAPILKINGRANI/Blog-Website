@@ -57,61 +57,12 @@
                 </p>
             </div>
 
-            {{-- Comments Template --}}
-            {{-- <div class="blog-post-comment-container">
-                <h5><i class="fa fa-comments-o mb25"></i> 20 Comments</h5>
-
-                <div class="blog-post-comment">
-                    <img src="{{ asset('frontend/assets/img/other/photo-2.jpg') }}" class="img-circle" alt="image">
-                    <span class="blog-post-comment-name">John Boo</span> Jan. 20 2016, 10:00 PM
-                    <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
-                    <p>
-                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-                        consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
-                    </p>
-                </div>
-
-                <div class="blog-post-comment">
-                    <img src="{{ asset('frontend/assets/img/other/photo-4.jpg') }}" class="img-circle" alt="image">
-                    <span class="blog-post-comment-name">John Boo</span> Jan. 20 2016, 10:00 PM
-                    <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
-                    <p>
-                        Adipisci velit sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam.
-                    </p>
-
-                    <div class="blog-post-comment-reply">
-                        <img src="{{ asset('frontend/assets/img/other/photo-2.jpg') }}" class="img-circle" alt="image">
-                        <span class="blog-post-comment-name">John Boo</span> Jan. 20 2016, 10:00 PM
-                        <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
-                        <p>
-                            Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
-                            molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="blog-post-comment">
-                    <img src="{{ asset('frontend/assets/img/other/photo-1.jpg') }}" class="img-circle" alt="image">
-                    <span class="blog-post-comment-name">John Boo</span> Jan. 20 2016, 10:00 PM
-                    <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
-                    <p>
-                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur adipisci velit.
-                    </p>
-                </div>
-
-                <button class="button button-default button-sm center-block button-block mt25 mb25">Load More
-                    Comments</button>
-
-
-            </div> --}}
-
-
             {{-- MY COMMENTS SECTION --}}
             <div class="blog-post-comment-container">
                 <h5><i class="fa fa-comments-o mb25"></i>{{ $post->comments->count() }} Comments</h5>
-                @foreach ($comments as $comment)
+                @foreach ($comments->where('parent_id', null) as $comment)
                     @if ($comment->status === 'approved')
+                        {{-- MAIN COMMENT --}}
                         <div class="blog-post-comment">
                             <span
                                 class="blog-post-comment-name">{{ $comment->author->name }}</span>{{ $comment->created_at->diffForHumans() }}
@@ -119,40 +70,94 @@
                             <p style="margin: 5px 0 0 0;">
                                 {{ $comment->body }}
                             </p>
+
+                            {{-- Reply FORM --}}
+                            <div class="form-floating m-5">
+                                <form action={{ route('reply.store', [$comment, $post]) }} method="POST">
+                                    @csrf
+                                    <textarea type="text" class="blog-leave-comment-textarea form-control @error('body') isinvalid @enderror"
+                                        id="body" name="body" placeholder="Reply To This Comment" id="floatingTextarea"></textarea>
+                                    <div id="nameHelp" class="form-text text-danger">
+                                        @error('body')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <button type="submit" class="button button-pasific button-sm center-block mb25">Leave
+                                        reply</button>
+                                </form>
+                            </div>
+                        @else
+                            <div class="blog-post-comment">
+                                <p>Waiting For Approval From The Admin</p>
+                            </div>
+                    @endif
+            </div>
+
+
+            {{-- COMMENT REPLY --}}
+            @foreach ($comments->where('parent_id', $comment->id) as $reply)
+                @if ($reply->status === 'approved')
+                    <div class="blog-post-comment-reply">
+
+                        <span
+                            class="blog-post-comment-name">{{ $reply->author->name }}</span>{{ $reply->created_at->diffForHumans() }}
+                        <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i> Reply</a>
+                        <p>
+                            {{ $reply->body }}
+                        </p>
+
+
+                        {{-- Reply FORM --}}
+                        <div class="form-floating m-5">
+                            <form action={{ route('reply.store', [$comment, $post]) }} method="POST">
+                                @csrf
+                                <textarea type="text" class="blog-leave-comment-textarea form-control @error('body') isinvalid @enderror"
+                                    id="body" name="body" placeholder="Reply To This Comment" id="floatingTextarea"></textarea>
+                                <div id="nameHelp" class="form-text text-danger">
+                                    @error('body')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                                <button type="submit" class="button button-pasific button-sm center-block mb25">Leave
+                                    reply</button>
+                            </form>
                         </div>
                     @else
                         <div class="blog-post-comment">
                             <p>Waiting For Approval From The Admin</p>
                         </div>
-                    @endif
-                @endforeach
-            </div>
-
-            {{-- <input type="text" name="name" class="blog-leave-comment-input" placeholder="name" required>
-                    <input type="email" name="name" class="blog-leave-comment-input" placeholder="email" required>
-                    <input type="url" name="name" class="blog-leave-comment-input" placeholder="website"> --}}
-            <div class="blog-post-leave-comment">
-                <h5><i class="fa fa-comment mt25 mb25"></i> Leave Comment</h5>
-
-                <form action={{ route('comments.store') }} method="POST">
-                    @csrf
-                    {{-- Important
-                         Post id hidden karke beji hai --}}
-                    <input type="hidden" name="post_id" value={{ $post->id }}>
-                    <label for="body" class="form-label">Comment Body</label>
-                    <textarea type="text" name="body"
-                        class="blog-leave-comment-textarea @error('body') isinvalid
-                    @enderror" id="body"
-                        style="border:2px solid black">{{ old('body') }}</textarea>
-                    <div id="nameHelp" class="form-text text-danger">
-                        @error('body')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                    <button type="submit" class="button button-pasific button-sm center-block mb25">Leave Comment</button>
-                </form>
-            </div>
+                @endif
 
         </div>
+        @endforeach
+        @endforeach
+
+
+        </div>
+
+        <div class="blog-post-leave-comment">
+            <h5><i class="fa fa-comment mt25 mb25"></i> Leave Comment</h5>
+
+            <form action={{ route('comments.store', $post) }} method="POST">
+                @csrf
+                <label for="body" class="form-label">Comment Body</label>
+                <textarea type="text" name="body"
+                    class="blog-leave-comment-textarea @error('body') isinvalid
+                                @enderror"
+                    id="body" style="border:2px solid black">{{ old('body') }}</textarea>
+                <div id="nameHelp" class="form-text text-danger">
+                    @error('body')
+                        {{ $message }}
+                    @enderror
+                </div>
+                <button type="submit" class="button button-pasific button-sm center-block mb25">Leave
+                    Comment</button>
+            </form>
+        </div>
+        </div>
+
+
+
+
     </section>
 @endsection
