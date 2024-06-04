@@ -34,11 +34,14 @@
                                                 <td>{{ $comment->body }}</td>
                                                 <td>{{ $comment->status }}</td>
                                                 <td>
-                                                    <button
-                                                        data-approvecomment-route="{{ route('post.approveComment', $comment) }}"
-                                                        class="approveComment btn btn-primary" title="approveComment">
-                                                        <i class="fa-solid fa-thumbs-up"></i>
-                                                    </button>
+                                                    @if ($comment->status === 'not_approved')
+                                                        <button
+                                                            data-approvecomment-route="{{ route('post.approveComment', $comment) }}"
+                                                            class="approveComment btn btn-primary" title="approveComment">
+                                                            <i class="fa-solid fa-thumbs-up"></i>
+                                                        </button>
+                                                    @endif
+
                                                     <button
                                                         data-deletecomment-route="{{ route('post.deleteComment', $comment) }}"
                                                         class="deleteComment btn btn-warning" title="deleteComment">
