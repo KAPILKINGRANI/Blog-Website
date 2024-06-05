@@ -104,7 +104,7 @@
     </div>
 
 
-    <!-- Newsletter Area =====================================-->
+    {{-- <!-- Newsletter Area =====================================-->
     <div id="newsletter" class="bg-dark2 pt50 pb50">
         <div class="container">
             <div class="row">
@@ -127,7 +127,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- Footer Area

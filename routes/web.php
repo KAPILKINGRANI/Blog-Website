@@ -14,9 +14,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     })->name('dashboard');
 
 
-    Route::resource('tags', TagsController::class)->except('show');
-    Route::resource('categories', CategoriesController::class)->except('show');
-    Route::resource('users', UsersController::class)->except('show');
+    Route::resource('/tags', TagsController::class)->except('show');
+    Route::resource('/categories', CategoriesController::class)->except('show');
+    Route::resource('/users', UsersController::class)->except('show');
 
     Route::put('/users/{user}/makeAdmin', [UsersController::class, 'makeAdmin'])->name('users.makeAdmin');
     Route::put('/users/{user}/revokeAdmin', [UsersController::class, 'revokeAdmin'])->name('users.revokeAdmin');
@@ -35,7 +35,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/posts/trashed', [PostsController::class, 'trashed'])->name('posts.trashed');
     // This should be written above /posts/{post} because posts resource route also has the route which is of same url as mentioned above nahi toh neeche /posts/{post} mai as a placeholder banke chala jayega
 
-    Route::resource('posts', PostsController::class);
+    Route::resource('/posts', PostsController::class);
 
     Route::put('/posts/{post}/publish-now', [PostsController::class, 'publish'])->name('posts.publish');
 

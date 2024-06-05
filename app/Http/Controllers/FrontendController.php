@@ -25,7 +25,6 @@ class FrontendController extends Controller
     public function displayComments()
     {
         $comments = Comment::paginate(20);
-        // dd($comments);
         return view('admin-panel.comments.index', compact('comments'));
     }
 
@@ -65,7 +64,7 @@ class FrontendController extends Controller
 
         return view('frontend.single-post', compact(['categories', 'tags', 'post', 'comments']));
     }
-    public function storeComment(Request $request,Post $post)
+    public function storeComment(Request $request, Post $post)
     {
         $request->validate([
             'body' => 'required'

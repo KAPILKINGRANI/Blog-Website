@@ -114,7 +114,7 @@ class PostsController extends Controller implements HasMiddleware
         $post = Post::onlyTrashed()->find($postId);
         $post->deleteImage();
         $post->forceDelete();
-        session()->flash('Success', 'Post Deleted Successfully!');
+        session()->flash('success', 'Post Has Been Permanently Deleted Successfully!');
         return (redirect(route('posts.trashed')));
     }
 }
